@@ -2,7 +2,6 @@ import streamlit as st
 import pandas as pd
 import altair as alt
 import numpy as np
-import seaborn as sns
 
 meteor_df = pd.read_csv('Meteorite_Landings.csv', parse_dates=['year'])
 
