@@ -1,3 +1,4 @@
 pandas
 altair
 streamlit
+streamlit_lottie

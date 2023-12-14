@@ -2,13 +2,38 @@ import streamlit as st
 import pandas as pd
 import altair as alt
 import numpy as np
+from streamlit_lottie import st_lottie
+import requests
+
 
 meteor_df = pd.read_csv('Meteorite_Landings.csv', parse_dates=['year'])
 
 recclasses = list(meteor_df['recclass'].unique())
 
+
+@st.cache_data
+def load_lottieurl(url: str):
+    r = requests.get(url)
+    if r.status_code != 200:
+        return None
+    return r.json()
+
 st.title("Exploring Meteorite Mass and Year by Recclass and Fall Type")
-st.markdown("Users can explore the complex links between meteorite mass, year of occurrence, recclass, and fall type through well designed graphics. A wide range of tools are available on the dashboard, such as dynamic mass range selector, year range slider for temporal research, and multi-select widgets for recclass and fall type. The dashboard, which is separated into three tabs, tells a compelling story. It begins with a line graph that shows the relationship between meteorite mass and year, moves to a bar graph that classifies meteorite masses, and ends with an eye-catching world map that shows the locations of meteorite landings throughout the world. This multipurpose instrument not only enables users to identify trends in meteorite data but also prompts them to consider the spatial details of astronomical contacts on Earth.")
+
+
+
+lottie_hello = load_lottieurl("https://lottie.host/2314d9b4-f9d3-4b90-bc4c-dc91961373f4/XT3H1PyKLY.json")
+# Display the Lottie animation
+st_lottie(
+    lottie_hello,
+    speed=1,
+    reverse=False,
+    loop=True,
+    quality="low",
+    height = 300,
+    width=300,key=None,)
+
+st.markdown("Users can explore the complex links between meteorite mass, year of occurrence, recclass, and fall type through well designed graphics. A wide range of tools are available on the streamlit app, such as dynamic mass range selector, year range slider for temporal research, and multi-select widgets for recclass and fall type. The app, which is separated into three tabs, tells a compelling story. It begins with a line graph that shows the relationship between meteorite mass and year, moves to a bar graph that classifies meteorite masses, and ends with an eye-catching world map that shows the locations of meteorite landings throughout the world. This multipurpose instrument not only enables users to identify trends in meteorite data but also prompts them to consider the spatial details of astronomical contacts on Earth.")
 
 
 recclass_select = st.sidebar.multiselect("Select 'Recclass(es):'", recclasses, default=['L6'])
